@@ -11,7 +11,7 @@ const Board = () => {
   const activePosition = useRecoilValue(activePositionState);
 
   return (
-    <div className="flex flex-wrap w-[600px] h-[600px] justify-center align-middle mx-auto mt-32">
+    <div className="flex flex-wrap w-[600px] h-[600px] justify-center align-middle mx-auto my-auto">
       {board.flat().map((square, i) => (
         <Square
           key={i}
