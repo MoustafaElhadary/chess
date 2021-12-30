@@ -1,0 +1,8 @@
+{
+  "extends": "next/core-web-vitals",
+  "react-hooks/exhaustive-deps": [
+    "warn", {
+      "additionalHooks": "(useRecoilCallback|useRecoilTransaction_UNSTABLE)"
+    }
+  ]
+}
