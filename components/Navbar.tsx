@@ -1,19 +1,15 @@
 import { Menu, Transition } from "@headlessui/react";
+import { authState } from "atoms/authAtom";
 import { classNames } from "lib/helpers";
 import { Fragment } from "react";
-
-const user = {
-  name: "Tom Cook",
-  email: "tom@example.com",
-  imageUrl:
-    "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-};
-
-// const user = null;
+import { useRecoilValue } from "recoil";
 
 export default function Navbar() {
+  const auth = useRecoilValue(authState);
+  const user = auth?.user;
+
   return (
-    <nav className="bg-white shadow">
+    <nav className="bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex">
@@ -36,11 +32,18 @@ export default function Navbar() {
                 <>
                   <button
                     type="button"
-                    className="relative inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-500 hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-indigo-500 mr-2"
+                    className="relative inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-500 hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-indigo-500 mr-4"
                   >
-                    <span>Sign up / Sign in</span>
+                    <span>Sign up</span>
                   </button>
-                 
+                </>
+                <>
+                  <button
+                    type="button"
+                    className="relative inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-500 hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-indigo-500"
+                  >
+                    <span>Sign in</span>
+                  </button>
                 </>
               </div>
             )}
@@ -52,13 +55,13 @@ export default function Navbar() {
                     <Menu.Button className=" flex text-sm rounded-full focus:outline-none ">
                       <span className="sr-only">Open user menu</span>
                       <span className="my-auto mr-2 text-center text-black">
-                        {user.name}
+                        {/* {user.name} */}
                       </span>
-                      <img
+                      {/* <img
                         className="h-8 w-8 rounded-full"
                         src={user.imageUrl}
                         alt=""
-                      />
+                      /> */}
                     </Menu.Button>
                   </div>
                   <Transition

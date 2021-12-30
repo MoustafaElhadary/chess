@@ -1,5 +1,5 @@
 import { authState } from "atoms/authAtom";
-import { supabase } from "lib/dbClientSide";
+import { dbClientSide } from "lib/dbClientSide";
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 export default function Account() {
@@ -17,9 +17,9 @@ export default function Account() {
   async function getProfile() {
     try {
       setLoading(true);
-      const user = supabase.auth.user();
+      const user = dbClientSide.auth.user();
 
-      let { data, error, status } = await supabase
+      let { data, error, status } = await dbClientSide
         .from<{
           username: string;
           website: string;
@@ -57,7 +57,7 @@ export default function Account() {
   }) {
     try {
       setLoading(true);
-      const user = supabase.auth.user();
+      const user = dbClientSide.auth.user();
 
       const updates = {
         id: user?.id,
@@ -67,7 +67,7 @@ export default function Account() {
         updated_at: new Date(),
       };
 
-      let { error } = await supabase.from("profiles").upsert(updates, {
+      let { error } = await dbClientSide.from("profiles").upsert(updates, {
         returning: "minimal", // Don't return the value after inserting
       });
 
@@ -119,7 +119,7 @@ export default function Account() {
       <div>
         <button
           className="button block"
-          onClick={() => supabase.auth.signOut()}
+          onClick={() => dbClientSide.auth.signOut()}
         >
           Sign Out
         </button>

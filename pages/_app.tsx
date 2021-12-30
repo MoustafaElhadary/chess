@@ -1,4 +1,4 @@
-import AuthWrapper from "components/AuthWrapper";
+import { AuthProvider } from "hooks/auth";
 import type { AppProps } from "next/app";
 import { DndProvider } from "react-dnd";
 import { TouchBackend } from "react-dnd-touch-backend";
@@ -8,14 +8,14 @@ import "../styles/globals.css";
 function App({ Component, pageProps }: AppProps) {
   return (
     <RecoilRoot>
-      <AuthWrapper>
+      <AuthProvider>
         <DndProvider
           backend={TouchBackend}
           options={{ enableMouseEvents: true }}
         >
           <Component {...pageProps} />
         </DndProvider>
-      </AuthWrapper>
+      </AuthProvider>
     </RecoilRoot>
   );
 }

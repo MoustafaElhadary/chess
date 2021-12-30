@@ -21,3 +21,14 @@ export type GameType = {
   turn: "b" | "w";
   result: string | null;
 };
+
+
+export type ErrorResponse = {
+  error?: unknown;
+};
+
+
+export type User = {
+  name: string;
+  id: string;
+}
