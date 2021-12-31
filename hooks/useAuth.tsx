@@ -5,6 +5,35 @@ import { useEffect } from "react";
 import { useSetRecoilState } from "recoil";
 import { User } from "types";
 
+
+export async function getProfile(session: Session | null) {
+  try {
+    const user = session?.user;
+
+    if (!user) {
+      return null;
+    }
+
+    let { data, error, status } = await dbClientSide
+      .from<User>("profiles")
+      .select(`name`)
+      .eq("id", user?.id!)
+      .single();
+
+    if (error && status !== 406) {
+      throw error;
+    }
+
+    console.log({ data });
+
+    if (data) {
+      return data;
+    }
+  } catch (error) {
+    console.log({ error });
+  }
+}
+
 export const AuthProvider = ({
   children,
 }: {
@@ -24,33 +53,7 @@ export const AuthProvider = ({
     });
   }, []);
 
-  async function getProfile(session: Session | null) {
-    try {
-      const user = session?.user;
-
-      if (!user) {
-        return null;
-      }
-
-      let { data, error, status } = await dbClientSide
-        .from<User>("profiles")
-        .select(`name`)
-        .eq("id", user?.id!)
-        .single();
-
-      if (error && status !== 406) {
-        throw error;
-      }
-
-      console.log({ data });
-
-      if (data) {
-        return data;
-      }
-    } catch (error) {
-      console.log({ error });
-    }
-  }
+  
 
   return <> {children}</>;
 };

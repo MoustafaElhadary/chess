@@ -6,7 +6,7 @@ const Chess = typeof ChessJS === "function" ? ChessJS : ChessJS.Chess;
 export const chess = new Chess();
 
 export function initGame() {
-  updateGame();
+  return updateGame();
 }
 
 export function resetGame() {
@@ -51,6 +51,7 @@ function updateGame(pendingPromotion?: Promotion): GameType {
     isGameOver,
     turn: chess.turn(),
     result: isGameOver ? getGameResult() : null,
+    fen: chess.fen(),
   };
   return game;
 }

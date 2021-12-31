@@ -5,7 +5,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "typescript:check": "tsc",
+    "types:generate-db": "npx openapi-typescript https://ytdtlcgvwsyuogyrdbts.supabase.co/rest/v1/?apikey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTY0MDgyNzA2MSwiZXhwIjoxOTU2NDAzMDYxfQ.eyX4NkRr-gVi8o5UX3aLFGB4LkPqRge2K0r6nbaJaFo --output types/supabase.ts"
+  
   },
   "dependencies": {
     "@headlessui/react": "^1.4.2",

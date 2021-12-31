@@ -1,12 +1,17 @@
 import { Menu, Transition } from "@headlessui/react";
 import { authState } from "atoms/authAtom";
+import { getProfile } from "hooks/useAuth";
 import { classNames } from "lib/helpers";
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import { useRecoilValue } from "recoil";
 
 export default function Navbar() {
   const auth = useRecoilValue(authState);
   const user = auth?.user;
+
+  useEffect(() => {
+    getProfile(auth);
+  }, [auth]);
 
   return (
     <nav className="bg-white">

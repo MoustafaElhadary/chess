@@ -1,4 +1,4 @@
-import { AuthProvider } from "hooks/auth";
+import { AuthProvider } from "hooks/useAuth";
 import type { AppProps } from "next/app";
 import { DndProvider } from "react-dnd";
 import { TouchBackend } from "react-dnd-touch-backend";

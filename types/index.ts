@@ -20,6 +20,7 @@ export type GameType = {
   isGameOver: boolean;
   turn: "b" | "w";
   result: string | null;
+  fen: string;
 };
 
 

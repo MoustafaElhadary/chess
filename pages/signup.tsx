@@ -23,6 +23,8 @@ export default function SignUp() {
 
     console.log({ user, session, error });
   };
+
+
   return (
     <AuthLayout>
       <h2 className="mt-6 text-3xl font-extrabold text-gray-900">
