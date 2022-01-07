@@ -1,24 +1,25 @@
 import { dbServerSide } from "lib/dbServerSide";
 import type { NextApiRequest, NextApiResponse } from "next";
-import { ErrorResponse } from "types";
-import { definitions } from "types/supabase";
+import { ErrorResponse, GameEndpointResponse } from "types";
 
-type Data = {
-  status: string;
-};
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<definitions["game"] | ErrorResponse>
+  res: NextApiResponse<GameEndpointResponse | ErrorResponse>
 ) {
   try {
-    const { userId, slug } = req.body;
+    const { slug } = req.query;
 
     // get game from db
     let { error: fetchError, data: games } = await dbServerSide
-      .from<definitions["game"]>("game")
-      .select("*")
-      .eq("slug", slug);
+      .from<GameEndpointResponse>("game")
+      .select(
+        `*,
+      player1:player1_id ( name, avatar_url ),
+      player2:player2_id ( name, avatar_url )
+      `
+      )
+      .eq("slug", slug as string);
 
     if (fetchError) {
       res.status(400).json({ error: fetchError });

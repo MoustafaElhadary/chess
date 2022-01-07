@@ -1,15 +1,11 @@
 import { dbServerSide } from "lib/dbServerSide";
 import type { NextApiRequest, NextApiResponse } from "next";
-import { ErrorResponse } from "types";
+import { ErrorResponse, GameJoinEndpointResponse } from "types";
 import { definitions } from "types/supabase";
-
-type Data = {
-  status: string;
-};
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Data | ErrorResponse>
+  res: NextApiResponse<GameJoinEndpointResponse | ErrorResponse>
 ) {
   try {
     const { userId, slug } = req.body;
@@ -36,7 +32,12 @@ export default async function handler(
     }
 
     // check if game is full
-    if (game.player1_id && game.player2_id && game.player1_id !== "" && game.player2_id !== "") {
+    if (
+      game.player1_id &&
+      game.player2_id &&
+      game.player1_id !== "" &&
+      game.player2_id !== ""
+    ) {
       res.status(400).json({ error: "Game is full" });
     }
 

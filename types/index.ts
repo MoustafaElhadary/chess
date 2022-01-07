@@ -1,4 +1,5 @@
 import { PieceType, Square } from "chess.js";
+import { definitions } from "types/supabase";
 
 export type BoardSquare = {
   type: PieceType;
@@ -33,3 +34,20 @@ export type User = {
   name: string;
   id: string;
 }
+
+
+export type  GameEndpointResponse = definitions["game"] & {
+  player1: definitions["profiles"] | null;
+  player2: definitions["profiles"] | null;
+};
+
+export type GameJoinEndpointResponse = {
+  status: string;
+};
+
+export type  GameNewEndpointResponse = {
+  player1_id: any;
+  slug: string;
+  turn: "b" | "w";
+  fen: string;
+};

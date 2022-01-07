@@ -2,18 +2,13 @@ import { initGame } from "lib/chessEngine";
 import { dbServerSide } from "lib/dbServerSide";
 import { makeId } from "lib/helpers";
 import type { NextApiRequest, NextApiResponse } from "next";
-import { ErrorResponse } from "types";
+import { ErrorResponse, GameNewEndpointResponse } from "types";
 
-type Data = {
-  player1_id: any;
-  slug: string;
-  turn: "b" | "w";
-  fen: string;
-};
+
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Data | ErrorResponse>
+  res: NextApiResponse<GameNewEndpointResponse | ErrorResponse>
 ) {
   try {
     const { userId } = req.body;

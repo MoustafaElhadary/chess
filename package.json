@@ -8,7 +8,6 @@
     "lint": "next lint",
     "typescript:check": "tsc",
     "types:generate-db": "npx openapi-typescript https://ytdtlcgvwsyuogyrdbts.supabase.co/rest/v1/?apikey=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTY0MDgyNzA2MSwiZXhwIjoxOTU2NDAzMDYxfQ.eyX4NkRr-gVi8o5UX3aLFGB4LkPqRge2K0r6nbaJaFo --output types/supabase.ts"
-  
   },
   "dependencies": {
     "@headlessui/react": "^1.4.2",
@@ -24,7 +23,8 @@
     "react-dnd-html5-backend": "^14.0.2",
     "react-dnd-touch-backend": "^14.1.1",
     "react-dom": "17.0.2",
-    "recoil": "^0.5.2"
+    "recoil": "^0.5.2",
+    "swr": "^1.1.2"
   },
   "devDependencies": {
     "@types/chess.js": "^0.11.2",
