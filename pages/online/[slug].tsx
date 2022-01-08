@@ -1,32 +1,25 @@
 import { authState } from "atoms/authAtom";
 import Board from "components/Board";
-import { initGame } from "lib/chessEngine";
+import useChessGame from "hooks/useChessGame";
+import { chess, initGame } from "lib/chessEngine";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useRecoilValue } from "recoil";
-import useSWR, { KeyedMutator } from "swr";
-import { GameEndpointResponse } from "types";
 
-const Online: NextPage = () => {
+const OnlinePage: NextPage = () => {
   const auth = useRecoilValue(authState);
   const user = auth?.user;
   const router = useRouter();
   const { slug } = router.query;
-  const {
-    data: game,
-    mutate,
-  }: { data?: GameEndpointResponse; mutate: KeyedMutator<any> } = useSWR(
-    `/api/game/${slug}`
-  );
 
-  useEffect(() => {
-    initGame();
-  }, []);
+  const { game } = useChessGame(slug as string);
+
+  console.log({ game, slug });
 
   return (
     <div className="min-h-screen justify-center align-middle flex flex-col">
-      {game && slug && !game.player2 && (
+      {game && slug && !game.player2 && game.player1_id !== user?.id && (
         <button
           type="button"
           className="items-center m-auto px-6 py-3 border border-transparent text-base font-medium rounded-full shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
@@ -41,7 +34,6 @@ const Online: NextPage = () => {
                 slug,
               }),
             });
-            mutate();
           }}
         >
           Join Game
@@ -52,4 +44,4 @@ const Online: NextPage = () => {
   );
 };
 
-export default Online;
+export default OnlinePage;

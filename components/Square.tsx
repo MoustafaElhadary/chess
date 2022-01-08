@@ -15,12 +15,14 @@ const Square = ({
   highlight,
   position,
   active,
+  isBlack = false,
 }: {
   square: BoardSquare | null;
   index: number;
   highlight: boolean;
   position: Square;
   active: boolean;
+  isBlack?: boolean;
 }) => {
   const setBoard = useSetRecoilState(boardState);
   const setMoves = useSetRecoilState(movesState);
@@ -28,7 +30,7 @@ const Square = ({
     activePositionState
   );
 
-  const darkSquareBg = isDarkSquare(index)
+  const darkSquareBg = isDarkSquare(index, isBlack)
     ? active
       ? "bg-[#B9CA42]"
       : "bg-[#769656]"
@@ -87,7 +89,6 @@ const Square = ({
       {highlight && square && (
         <div className="w-[70%] h-[70%] bg-transparent ring-slate-600 ring-8 rounded-full absolute inset-0 flex justify-center items-center z-10  m-auto opacity-25 "></div>
       )}
-
     </div>
   );
 };

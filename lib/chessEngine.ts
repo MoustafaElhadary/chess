@@ -31,23 +31,18 @@ function move(
   promotion?: "n" | "b" | "r" | "q" | undefined
 ) {
   let tempMove: ChessJS.ShortMove = { from, to };
-  if (promotion) {
-    tempMove.promotion = promotion;
-  }
   const legalMove = chess.move(tempMove);
 
-  console.log({ legalMove, tempMove });
   if (legalMove) {
     return updateGame();
   }
 }
 
-function updateGame(pendingPromotion?: Promotion): GameType {
+function updateGame(): GameType {
   const isGameOver = chess.game_over();
 
   const game = {
     board: chess.board(),
-    // pendingPromotion,
     isGameOver,
     turn: chess.turn(),
     result: isGameOver ? getGameResult() : null,
@@ -55,6 +50,7 @@ function updateGame(pendingPromotion?: Promotion): GameType {
   };
   return game;
 }
+
 function getGameResult() {
   if (chess.in_checkmate()) {
     const winner = chess.turn() === "w" ? "BLACK" : "WHITE";
