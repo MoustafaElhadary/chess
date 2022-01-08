@@ -1,4 +1,5 @@
 import { activePositionState } from "atoms/activePositionAtom";
+import { authState } from "atoms/authAtom";
 import { boardState } from "atoms/boardAtom";
 import { movesState } from "atoms/movesAtom";
 import { Square } from "chess.js";
@@ -6,7 +7,7 @@ import Piece from "components/Piece";
 import { handleMove } from "lib/chessEngine";
 import { isDarkSquare } from "lib/helpers";
 import { useDrop } from "react-dnd";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { BoardSquare } from "types";
 
 const Square = ({
@@ -16,6 +17,8 @@ const Square = ({
   position,
   active,
   isBlack = false,
+  isOnline = false,
+  slug,
 }: {
   square: BoardSquare | null;
   index: number;
@@ -23,7 +26,10 @@ const Square = ({
   position: Square;
   active: boolean;
   isBlack?: boolean;
+  isOnline?: boolean;
+  slug?: string;
 }) => {
+  const auth = useRecoilValue(authState);
   const setBoard = useSetRecoilState(boardState);
   const setMoves = useSetRecoilState(movesState);
   const [activeItemExists, setActivePosition] = useRecoilState(
@@ -59,11 +65,28 @@ const Square = ({
 
   const [, drop] = useDrop({
     accept: "piece",
-    drop: (item: { id: string }) => {
+    drop: async (item: { id: string }) => {
       const [fromPosition] = item.id.split("_");
       const game = handleMove(fromPosition as Square, position);
+
       if (game) {
         setBoard(game.board);
+        setMoves([]);
+        setActivePosition("");
+      }
+      if (isOnline) {
+        await fetch("/api/game/move", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            access_token: auth?.access_token,
+            from: fromPosition,
+            to: position,
+            slug,
+          }),
+        });
         setMoves([]);
         setActivePosition("");
       }

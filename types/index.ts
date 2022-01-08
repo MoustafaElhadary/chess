@@ -45,6 +45,10 @@ export type GameJoinEndpointResponse = {
   status: string;
 };
 
+export type GameMoveEndpointResponse = {
+  status: string;
+};
+
 export type  GameNewEndpointResponse = {
   player1_id: any;
   slug: string;

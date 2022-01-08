@@ -2,16 +2,14 @@ import { authState } from "atoms/authAtom";
 import Layout from "components/Layout/Layout";
 import type { NextPage } from "next";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React from "react";
 import { useRecoilValue } from "recoil";
-import { useRouter } from 'next/router'
-
 
 const Home: NextPage = () => {
   const auth = useRecoilValue(authState);
   const user = auth?.user;
-  const router = useRouter()
-
+  const router = useRouter();
 
   const createGame = async () => {
     const res = await fetch("/api/game/new", {
@@ -20,7 +18,7 @@ const Home: NextPage = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        userId: user?.id,
+        access_token: auth?.access_token,
       }),
     });
     const data = await res.json();
@@ -29,14 +27,13 @@ const Home: NextPage = () => {
   };
 
   const handleOnlineClick = async () => {
-    if (user){
-      const {slug} = await createGame();
+    if (user) {
+      const { slug } = await createGame();
       router.push(`/online/${slug}`);
-    }else{
-      router.push('/signin');
+    } else {
+      router.push("/signin");
     }
-
-  }
+  };
 
   return (
     <Layout>
@@ -49,7 +46,10 @@ const Home: NextPage = () => {
             </a>
           </Link>
 
-          <button onClick={()=> handleOnlineClick()} className="inline-flex items-center px-12 py-6 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-[#769656]">
+          <button
+            onClick={() => handleOnlineClick()}
+            className="inline-flex items-center px-12 py-6 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-[#769656]"
+          >
             Play online
           </button>
         </div>

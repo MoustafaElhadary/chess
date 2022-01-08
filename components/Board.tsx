@@ -5,7 +5,15 @@ import Square from "components/Square";
 import { getPosition } from "lib/helpers";
 import { useRecoilValue } from "recoil";
 
-const Board = ({ isBlack = false }: { isBlack?: boolean }) => {
+const Board = ({
+  isBlack = false,
+  isOnline = false,
+  slug,
+}: {
+  isBlack?: boolean;
+  isOnline?: boolean;
+  slug?: string;
+}) => {
   const board = useRecoilValue(boardState).flat();
   const moves = useRecoilValue(movesState);
   const activePosition = useRecoilValue(activePositionState);
@@ -21,9 +29,10 @@ const Board = ({ isBlack = false }: { isBlack?: boolean }) => {
           position={getPosition(i, isBlack)}
           active={getPosition(i, isBlack) === activePosition}
           isBlack={isBlack}
+          isOnline={isOnline}
+          slug={slug}
         />
       ))}
-      
     </div>
   );
 };

@@ -1,11 +1,16 @@
 import * as ChessJS from "chess.js";
-import { GameType, Promotion } from "types";
+import { GameType } from "types";
 
 const Chess = typeof ChessJS === "function" ? ChessJS : ChessJS.Chess;
 
 export const chess = new Chess();
 
 export function initGame() {
+  return updateGame();
+}
+
+export function loadFen(fen: string) {
+  chess.load(fen);
   return updateGame();
 }
 
@@ -32,7 +37,7 @@ function move(
 ) {
   let tempMove: ChessJS.ShortMove = { from, to };
   const legalMove = chess.move(tempMove);
-
+  
   if (legalMove) {
     return updateGame();
   }

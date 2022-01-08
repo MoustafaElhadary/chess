@@ -15,8 +15,6 @@ const OnlinePage: NextPage = () => {
 
   const { game } = useChessGame(slug as string);
 
-  console.log({ game, slug });
-
   return (
     <div className="min-h-screen justify-center align-middle flex flex-col">
       {game && slug && !game.player2 && game.player1_id !== user?.id && (
@@ -30,7 +28,7 @@ const OnlinePage: NextPage = () => {
                 "Content-Type": "application/json",
               },
               body: JSON.stringify({
-                userId: user?.id,
+                access_token: auth?.access_token,
                 slug,
               }),
             });
@@ -39,7 +37,11 @@ const OnlinePage: NextPage = () => {
           Join Game
         </button>
       )}
-      <Board isBlack={user?.id === game?.player2_id} />
+      <Board
+        isBlack={user?.id === game?.player2_id}
+        isOnline
+        slug={slug as string}
+      />
     </div>
   );
 };

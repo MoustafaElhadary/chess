@@ -8,7 +8,15 @@ export default async function handler(
   res: NextApiResponse<GameJoinEndpointResponse | ErrorResponse>
 ) {
   try {
-    const { userId, slug } = req.body;
+    const { access_token, slug } = req.body;
+
+    const { user } = await dbServerSide.auth.api.getUser(
+      access_token as string
+    );
+    if (!user) {
+      res.status(400).json({ error: "User not found" });
+    }
+    const userId = user?.id!;
 
     // get game from db
 

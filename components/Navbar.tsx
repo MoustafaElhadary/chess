@@ -3,12 +3,14 @@ import { authState } from "atoms/authAtom";
 import { getProfile } from "hooks/useAuth";
 import { classNames } from "lib/helpers";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { Fragment, useEffect } from "react";
 import { useRecoilValue } from "recoil";
 
 export default function Navbar() {
   const auth = useRecoilValue(authState);
   const user = auth?.user;
+  const router = useRouter();
 
   useEffect(() => {
     getProfile(auth);
@@ -37,6 +39,9 @@ export default function Navbar() {
               <div className="flex-shrink-0">
                 <>
                   <button
+                    onClick={() => {
+                      router.push("/signup");
+                    }}
                     type="button"
                     className="relative inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-500 hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-indigo-500 mr-4"
                   >
@@ -45,6 +50,9 @@ export default function Navbar() {
                 </>
                 <>
                   <button
+                    onClick={() => {
+                      router.push("/signin");
+                    }}
                     type="button"
                     className="relative inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-500 hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-indigo-500"
                   >
