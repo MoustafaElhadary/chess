@@ -96,7 +96,7 @@ const Square = ({
   return (
     <div
       key={index}
-      className={`${darkSquareBg} w-[12.5%] h-[12.5%] ${roundedCornerClass} shadow-slate-800 shadow-2xl flex relative ${activeBorder}`}
+      className={`${darkSquareBg} w-[12.5%] h-[12.5%] ${roundedCornerClass} shadow-slate-800 flex relative ${activeBorder}`}
       ref={drop}
       onClick={() => {
         setMoves([]);

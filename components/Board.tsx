@@ -19,7 +19,7 @@ const Board = ({
   const activePosition = useRecoilValue(activePositionState);
 
   return (
-    <div className="flex flex-wrap w-[600px] h-[600px] justify-center align-middle mx-auto my-auto">
+    <div className="flex flex-wrap w-full h-full justify-center align-middle">
       {(isBlack ? board.reverse() : board).map((square, i) => (
         <Square
           key={i}

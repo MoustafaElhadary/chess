@@ -42,6 +42,7 @@ const useChessGame = (slug: string) => {
 
   useEffect(() => {
     memoizedFetchGame(slug);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [slug]);
 
   return {
