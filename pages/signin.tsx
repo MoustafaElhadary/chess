@@ -10,8 +10,6 @@ export default function Login() {
       <div className="mt-8">
         <div className="mt-6">
           <form action="#" method="POST" className="space-y-6">
-          
-
             <div>
               <label
                 htmlFor="email"
